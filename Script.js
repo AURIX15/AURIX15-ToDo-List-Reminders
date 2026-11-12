@@ -31,5 +31,5 @@ if(localStorage.getItem("aurix15_reminder_patch_v1")!=="1"){tasks.forEach(task=>
 applyTheme();$("themeBtn").addEventListener("click",()=>{currentTheme=currentTheme==="dark"?"light":"dark";localStorage.setItem(THEME_KEY,currentTheme);applyTheme();applyLanguage();});
 $("soundSelect").value=soundChoice;$("soundSelect").addEventListener("change",e=>{soundChoice=e.target.value;localStorage.setItem(SOUND_KEY,soundChoice);});
 $("testSoundBtn").addEventListener("click",()=>{if(audioContext&&audioContext.state==="suspended")audioContext.resume();playReminderSound();});
-document.addEventListener("pointerdown",()=>{if(audioContext&&audioContext.state==="suspended")audioContext.resume();},{once:true});
+document.addEventListener("pointerdown",()=>{try{const Ctx=window.AudioContext||window.webkitAudioContext;audioContext=audioContext||(Ctx?new Ctx():null);if(audioContext&&audioContext.state==="suspended")audioContext.resume();}catch(e){}},{once:true});
 checkReminders();
